@@ -1,0 +1,100 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Lexend', sans-serif;
+}
+
+/* Body and Background */
+body {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background-color: #000;
+}
+
+/* Login Form Container */
+form {
+    background: rgba(43, 25, 25, 0.15);
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    padding: 30px;
+    border-radius: 16px;
+    backdrop-filter: blur(25px);
+    text-align: center;
+    color: #d1d1d1;
+    width: 400px;
+    box-shadow: 0px 0px 20px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Heading */
+form h2 {
+    font-size: 40px;
+    color: #d1d1d1;
+    margin-bottom: 30px;
+}
+
+/* Labels */
+form label {
+    display: block;
+    text-align: left;
+    margin-top: 20px;
+    margin-bottom: 5px;
+    color: #d1d1d1;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+/* Inputs */
+form input[type="text"],
+form input[type="password"] {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    padding: 12px 15px;
+    border-radius: 99px;
+    font-size: 17px;
+    color: white;
+    font-weight: 600;
+    outline: 3px solid transparent;
+    transition: outline 0.3s ease;
+}
+
+form input::placeholder {
+    color: #787878;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+form input:focus {
+    outline: 3px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Button */
+form button[type="submit"] {
+    width: 160px;
+    padding: 10px 0;
+    margin-top: 30px;
+    background: #1c1c1c;
+    border: none;
+    border-radius: 99px;
+    color: #787878;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+form button[type="submit"]:hover {
+    transform: scale(1.05);
+    background: #000000;
+}
+
+/* Error Message */
+.error-message {
+    color: #ff6b6b;
+    font-size: 14px;
+    margin-top: 15px;
+}

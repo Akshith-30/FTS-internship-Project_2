@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+</head>
+<body>
+
+<h1 class="landing-text">
+    Welcome to the Admin Dashboard – Manage your students, reports, and records efficiently.
+</h1>
+
+<div class="dashboard">
+    <div class="admin-card">
+        <div class="card-top">
+            <i data-lucide="user-plus" class="card-icon"></i>
+        </div>
+        <div class="card-content">
+            <h3>Add Student</h3>
+            <p>Add new students with relevant academic and personal information. Ensure the database stays current and accurate.</p>
+            <a href="addStudent.html" class="action-btn">Add Student</a>
+        </div>
+    </div>
+
+    <div class="admin-card">
+        <div class="card-top">
+            <i data-lucide="list" class="card-icon"></i>
+        </div>
+        <div class="card-content">
+            <h3>View Student List</h3>
+            <p>View and manage your student records. Filter, update, or review student profiles quickly and efficiently.</p>
+            <a href="studentList.html" class="action-btn">View Students</a>
+        </div>
+    </div>
+
+    <div class="admin-card">
+        <div class="card-top">
+            <i data-lucide="bar-chart-2" class="card-icon"></i>
+        </div>
+        <div class="card-content">
+            <h3>View Reports</h3>
+            <p>Analyze student performance and administrative data. Generate detailed reports to support better decision-making.</p>
+            <a href="reports.html" class="action-btn">Open Reports</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    lucide.createIcons();
+</script>
+</body>
+</html>
