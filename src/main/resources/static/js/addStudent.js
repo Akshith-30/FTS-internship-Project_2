@@ -1,8 +1,15 @@
-document.addEventListener("DOMContentLoaded", async () => {
+async function loadSubjects() {
   const container = document.getElementById("subjectMarksContainer");
+  container.innerHTML = "";
+
+  const heading = document.createElement("h3");
+  heading.className = "section-heading";
+  heading.textContent = "Subject Marks";
+  container.appendChild(heading);
 
   try {
     const response = await fetch("/api/subjects");
+    if (!response.ok) throw new Error("Failed to load subjects");
     const subjects = await response.json();
 
     subjects.forEach(subject => {
@@ -10,9 +17,15 @@ document.addEventListener("DOMContentLoaded", async () => {
       div.className = "input-box";
 
       div.innerHTML = `
-        <label>${subject.name}</label>
         <input type="hidden" name="subjects[]" value="${subject.name}" />
-        <input type="number" name="marks[]" placeholder="Marks for ${subject.name}" required />
+        <input
+          type="number"
+          name="marks[]"
+          placeholder="Marks for ${subject.name}"
+          required
+          min="0"
+          max="100"
+        />
       `;
 
       container.appendChild(div);
@@ -21,18 +34,20 @@ document.addEventListener("DOMContentLoaded", async () => {
     console.error("Failed to load subjects", err);
     container.innerHTML += `<p style="color:red;">Failed to load subjects</p>`;
   }
-});
+}
+
+document.addEventListener("DOMContentLoaded", loadSubjects);
 
 document.getElementById("addStudentForm").addEventListener("submit", async (e) => {
   e.preventDefault();
   const formData = new FormData(e.target);
 
   const marks = {};
-  for (const [key, value] of formData.entries()) {
-    if (key.startsWith("marks[")) {
-      const subjectName = key.match(/marks\[(.+)\]/)[1];
-      marks[subjectName] = parseInt(value);
-    }
+  const subjects = formData.getAll("subjects[]");
+  const marksArr = formData.getAll("marks[]");
+
+  for (let i = 0; i < subjects.length; i++) {
+    marks[subjects[i]] = parseInt(marksArr[i]);
   }
 
   const studentData = {
@@ -53,10 +68,16 @@ document.getElementById("addStudentForm").addEventListener("submit", async (e) =
     if (response.ok) {
       alert("Student added successfully!");
       e.target.reset();
-      document.getElementById("subjectMarksContainer").innerHTML = "<h3>Subject Marks</h3>";
+      await loadSubjects();
     } else {
-      const result = await response.json();
-      alert("Failed to add student: " + result.message || "Unknown error");
+      let result = {};
+      try {
+        result = await response.json();
+      } catch {
+        alert("Failed to add student: Unknown error");
+        return;
+      }
+      alert("Failed to add student: " + (result.message || "Unknown error"));
     }
   } catch (error) {
     alert("Error: " + error.message);

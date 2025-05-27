@@ -8,5 +8,7 @@ import java.util.Optional;
 
 @Repository
 public interface SubjectRepository extends JpaRepository<Subject, Integer> {
-    Optional<Subject> findByName(String name);
+
+    // Case-insensitive search for subject name
+    Optional<Subject> findByNameIgnoreCase(String name);
 }
