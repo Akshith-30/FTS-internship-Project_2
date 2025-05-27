@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Performance Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/dashboard.css">
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+</head>
+<body>
+
+<h1 class="landing-text">
+  Student Performance Overview – Explore insights, rankings, and academic analytics.
+</h1>
+
+<div class="dashboard">
+  <div class="admin-card">
+    <div class="card-top">
+      <i data-lucide="trophy" class="card-icon"></i>
+    </div>
+    <div class="card-content">
+      <h3>Top 3 Performers by Each Year</h3>
+      <p>View the top three students with the highest marks across all years. Quickly identify top achievers and performance trends.</p>
+      <a href="topPerformers.html" class="action-btn">View Performers</a>
+    </div>
+  </div>
+
+  <div class="admin-card">
+    <div class="card-top">
+      <i data-lucide="user-check" class="card-icon"></i>
+    </div>
+    <div class="card-content">
+      <h3>Grade-Level Students</h3>
+      <p>Filter students by academic grades. Assess the distribution of grades and review categorized student performance data.</p>
+      <a href="gradeLevels.html" class="action-btn">View Grades</a>
+    </div>
+  </div>
+
+  <div class="admin-card">
+    <div class="card-top">
+      <i data-lucide="alert-triangle" class="card-icon"></i>
+    </div>
+    <div class="card-content">
+      <h3>List of Failed Students by Year</h3>
+      <p>Access detailed lists of students who failed in each academic year. Supports interventions and academic support strategies.</p>
+      <a href="failedStudents.html" class="action-btn">View Failed List</a>
+    </div>
+  </div>
+
+  <div class="admin-card">
+    <div class="card-top">
+      <i data-lucide="bar-chart" class="card-icon"></i>
+    </div>
+    <div class="card-content">
+      <h3>Top 3 Students per Subject per Year</h3>
+      <p>Analyze subject-wise toppers for every academic year. Monitor excellence in individual subjects and areas of strength.</p>
+      <a href="subjectToppers.html" class="action-btn">View Subject Toppers</a>
+    </div>
+  </div>
+</div>
+
+<script>
+  lucide.createIcons();
+</script>
+</body>
+</html>
