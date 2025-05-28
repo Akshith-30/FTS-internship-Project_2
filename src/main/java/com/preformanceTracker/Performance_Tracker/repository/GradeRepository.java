@@ -10,9 +10,9 @@ import java.util.List;
 
 @Repository
 public interface GradeRepository extends JpaRepository<Grade, Long> {
+
         List<Grade> findByStudent(Student student);
-        List<Object[]> findAverageMarksPerStudent();
+
+        @Query("SELECT g.student.id, AVG(g.marks) FROM Grade g GROUP BY g.student.id")
+        List<Object[]> findAverageMarksPerStudent();  // ✅ Custom JPQL query to calculate average marks
 }
-
-
-

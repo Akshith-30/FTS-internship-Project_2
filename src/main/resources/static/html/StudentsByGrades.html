@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Students By Grades</title>
+    <link rel="stylesheet" href="/css/StudentsbyGrades.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- 🔙 Matching Back Button -->
+<a href="dashboard.html" class="back-button-dark">
+    <span class="icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" class="back-icon">
+            <path d="M15 18l-6-6 6-6" stroke="#e0e0e0" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+    </span>
+    <span class="text">Back to Dashboard</span>
+</a>
+
+<div class="container">
+    <h1>Students By Grade</h1>
+    <p class="description">Filter and view students based on their grade level (A/B/C).</p>
+
+    <!-- 🔽 Filters -->
+    <div class="filters">
+        <label for="grade-filter">Grade:</label>
+        <select id="grade-filter">
+            <option value="all">All Grades</option>
+            <option value="A">A</option>
+            <option value="B">B</option>
+            <option value="C">C</option>
+        </select>
+    </div>
+
+    <!-- 🧾 Table -->
+    <table id="students-table">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Year</th>
+            <th>Section</th>
+            <th>Grade</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Student rows will be inserted here -->
+        </tbody>
+    </table>
+
+    <p id="showing-count">Showing 0 of 0 students</p>
+</div>
+
+<script src="/js/StudentsByGrades.js"></script>
+</body>
+</html>
