@@ -8,7 +8,7 @@
 </head>
 <body>
 
-<h1 class="landing-text">Student Records </h1>
+<h1 class="landing-text">Student Records</h1>
 
 <div class="table-wrapper">
     <table class="student-table">
@@ -29,7 +29,7 @@
 </div>
 
 <script>
-    fetch('/api/students')
+    fetch('/api/students/with-grades') // updated endpoint
         .then(res => res.json())
         .then(data => {
             const tbody = document.getElementById("studentTableBody");
@@ -52,6 +52,7 @@
             console.error("Error fetching students:", error);
         });
 </script>
+
 <div class="footer-back-button">
     <a href="dashboard.html" class="back-btn">← Back to Dashboard</a>
 </div>

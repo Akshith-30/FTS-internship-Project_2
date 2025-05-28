@@ -10,10 +10,11 @@
 body {
     background: url('https://pplx-res.cloudinary.com/image/upload/v1747680261/user_uploads/70369086/38208bc6-cab7-4164-97f3-ec493d4090de/1000096854.jpg') no-repeat center center/cover;
     min-height: 100vh;
-    padding: 20px;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     align-items: center;
+    padding: 20px;
 }
 
 .landing-text {
@@ -60,6 +61,7 @@ body {
     padding: 15px;
     text-align: left;
     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    vertical-align: middle; /* 🟢 ensures middle alignment */
 }
 
 .student-table tbody tr:hover {
@@ -74,18 +76,6 @@ body {
     }
 }
 
-/* Make body full height with column flex layout */
-body {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px;
-    background: url('https://pplx-res.cloudinary.com/image/upload/v1747680261/user_uploads/70369086/38208bc6-cab7-4164-97f3-ec493d4090de/1000096854.jpg') no-repeat center center/cover;
-}
-
-/* Footer-style button at the bottom */
 .footer-back-button {
     width: 100%;
     max-width: 1000px;
@@ -110,4 +100,3 @@ body {
     color: #fff;
     transform: scale(1.05);
 }
-

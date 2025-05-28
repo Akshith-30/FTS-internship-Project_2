@@ -1,6 +1,7 @@
 package com.preformanceTracker.Performance_Tracker.controller;
 
 import com.preformanceTracker.Performance_Tracker.dto.StudentDTO;
+import com.preformanceTracker.Performance_Tracker.dto.StudentViewDTO;
 import com.preformanceTracker.Performance_Tracker.entity.Student;
 import com.preformanceTracker.Performance_Tracker.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,20 +33,18 @@ public class StudentController {
         }
     }
 
-    // ✅ GET: Fetch all students
+    // ✅ GET: Fetch all students (raw entities, not recommended for frontend)
     @GetMapping
     public ResponseEntity<List<Student>> getAllStudents() {
         try {
             List<Student> students = studentService.getAllStudents();
             return ResponseEntity.ok(students);
         } catch (Exception e) {
-            return ResponseEntity
-                    .internalServerError()
-                    .build();
+            return ResponseEntity.internalServerError().build();
         }
     }
 
-    // ✅ NEW: GET top 3 performers by year
+    // ✅ GET: Top 3 performers by year
     @GetMapping("/top-performers")
     public ResponseEntity<?> getTopPerformersByYear() {
         try {
@@ -59,4 +58,14 @@ public class StudentController {
         }
     }
 
+    //  Get students with grade A/B/C (DTO version for frontend)
+    @GetMapping("/with-grades")
+    public ResponseEntity<List<StudentViewDTO>> getStudentsWithGrades() {
+        try {
+            List<StudentViewDTO> studentsWithGrades = studentService.getAllStudentViews();
+            return ResponseEntity.ok(studentsWithGrades);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
 }

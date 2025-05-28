@@ -1,6 +1,7 @@
 package com.preformanceTracker.Performance_Tracker.service;
 
 import com.preformanceTracker.Performance_Tracker.dto.StudentDTO;
+import com.preformanceTracker.Performance_Tracker.dto.StudentViewDTO;
 import com.preformanceTracker.Performance_Tracker.entity.Grade;
 import com.preformanceTracker.Performance_Tracker.entity.Student;
 import com.preformanceTracker.Performance_Tracker.entity.Subject;
@@ -71,7 +72,7 @@ public class StudentService {
         return result;
     }
 
-    //grade calculation customize as needed
+    // Simple grade letter assignment (used in DTO with total marks)
     private String calculateGrade(int totalMarks) {
         if (totalMarks >= 450) return "A";
         else if (totalMarks >= 400) return "B";
@@ -165,5 +166,36 @@ public class StudentService {
                         )
                 ));
     }
+
+    // ✅ NEW: Return all students with calculated A/B/C grades
+    public List<StudentViewDTO> getAllStudentViews() {
+        List<Student> students = studentRepo.findAll();
+
+        return students.stream().map(student -> {
+            List<Grade> grades = gradeRepo.findByStudent(student);
+            int totalMarks = grades.stream().mapToInt(Grade::getMarks).sum();
+            int subjectCount = grades.size();
+
+            double percentage = subjectCount == 0 ? 0 : (totalMarks / (subjectCount * 100.0)) * 100;
+
+            String grade;
+            if (percentage >= 80) {
+                grade = "A";
+            } else if (percentage >= 60) {
+                grade = "B";
+            } else {
+                grade = "C";
+            }
+
+            StudentViewDTO dto = new StudentViewDTO();
+            dto.setId(student.getId());
+            dto.setName(student.getName());
+            dto.setRollNumber(student.getRollNumber());
+            dto.setYear(student.getYear());
+            dto.setSection(student.getSection());
+            dto.setGrade(grade);
+
+            return dto;
+        }).collect(Collectors.toList());
+    }
 }
-//
