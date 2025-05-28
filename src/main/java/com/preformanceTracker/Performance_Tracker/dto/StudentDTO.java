@@ -14,4 +14,3 @@ public class StudentDTO {
     private String grade;
     private Integer totalMarks;
 }
-//

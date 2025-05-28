@@ -1,5 +1,6 @@
 package com.preformanceTracker.Performance_Tracker.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -21,6 +22,6 @@ public class Subject {
     @OneToMany(mappedBy = "subject", cascade = CascadeType.ALL, orphanRemoval = true)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
+    @JsonManagedReference(value = "subject-grade")
     private List<Grade> grades;
 }
-//
