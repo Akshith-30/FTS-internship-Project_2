@@ -12,25 +12,10 @@ import lombok.Setter;
 @Table(name = "admin")
 public class Admin {
 
+    // Getters and setters
     @Id
     private String adminId;
 
     private String adminPass;
 
-    // Getters and setters
-    public String getAdminId() {
-        return adminId;
-    }
-
-    public void setAdminId(String adminId) {
-        this.adminId = adminId;
-    }
-
-    public String getAdminPass() {
-        return adminPass;
-    }
-
-    public void setAdminPass(String adminPass) {
-        this.adminPass = adminPass;
-    }
 }

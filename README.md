@@ -52,3 +52,7 @@ INSERT INTO subjects (name) VALUES
 ('Chemistry'),
 ('English'),
 ('Computer Science');
+
+UPDATE admin
+SET admin_pass = 'Admin@123'
+WHERE admin_id = 'admin123';
