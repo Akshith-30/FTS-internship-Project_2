@@ -1,10 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="UTF-8" />
+    <title>Grade-Level Students</title>
+    <link rel="stylesheet" href="/css/gradelevels.css" />
 </head>
 <body>
+<div class="container">
+    <h1>Grade-Level Students</h1>
+    <p class="description">Quickly access lists of students organized by their grade level. Performance details included.</p>
 
+    <div class="student-table">
+        <div class="table-header">
+            <span>Student Info</span>
+            <span>Year</span>
+            <span>Total</span>
+            <span>Grade</span>
+        </div>
+        <div id="studentRows" class="table-body">
+            <!-- Student rows injected here -->
+        </div>
+        <div id="noStudents" class="no-students">No students found for the selected filter.</div>
+    </div>
+
+    <a href="dashboard.html" class="dashboard-btn">Go Back to Dashboard</a>
+</div>
+
+<script src="/js/gradelevels.js"></script>
 </body>
 </html>
