@@ -1,25 +1,25 @@
 package com.preformanceTracker.Performance_Tracker.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
-@Getter
-@Setter
+import java.util.List;
+
 @Entity
 @Table(name = "subjects")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Subject {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
-    @Column(nullable = false, unique = true)
+    @Column(unique = true, nullable = false)
     private String name;
 
-    public Subject() {}
-
-    public Subject(String name) {
-        this.name = name;
-    }
+    @OneToMany(mappedBy = "subject", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private List<Grade> grades;
 }

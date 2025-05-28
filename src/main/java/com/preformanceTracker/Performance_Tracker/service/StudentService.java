@@ -25,10 +25,61 @@ public class StudentService {
     @Autowired
     private GradeRepository gradeRepo;
 
+    // Fetch all students (as entities)
     public List<Student> getAllStudents() {
         return studentRepo.findAll();
     }
 
+    public List<StudentDTO> getStudentsByYearAndSection(Integer year, String section) {
+        List<Student> students;
+        if (year != null && section != null && !section.isEmpty()) {
+            students = studentRepo.findByYearAndSection(year, section);
+        } else if (year != null) {
+            students = studentRepo.findByYear(year);
+        } else if (section != null && !section.isEmpty()) {
+            students = studentRepo.findBySection(section);
+        } else {
+            students = studentRepo.findAll();
+        }
+
+        List<StudentDTO> result = new ArrayList<>();
+        for (Student student : students) {
+            StudentDTO dto = new StudentDTO();
+            dto.setName(student.getName());
+            dto.setRollNumber(student.getRollNumber());
+            dto.setYear(student.getYear());
+            dto.setSection(student.getSection());
+
+            List<Grade> grades = gradeRepo.findByStudent(student);
+
+            Map<String, Integer> marksMap = new HashMap<>();
+            int totalMarks = 0;
+            for (Grade grade : grades) {
+                if (grade.getSubject() != null && grade.getSubject().getName() != null) {
+                    marksMap.put(grade.getSubject().getName(), grade.getMarks());
+                }
+                totalMarks += grade.getMarks();
+            }
+            dto.setMarks(marksMap);
+            dto.setTotalMarks(totalMarks);
+
+            // Dynamically calculate grade based on total marks
+            dto.setGrade(calculateGrade(totalMarks));
+
+            result.add(dto);
+        }
+        return result;
+    }
+
+    //grade calculation customize as needed
+    private String calculateGrade(int totalMarks) {
+        if (totalMarks >= 450) return "A";
+        else if (totalMarks >= 400) return "B";
+        else if (totalMarks >= 350) return "C";
+        else return "D";
+    }
+
+    // Save a new student with marks
     public void saveStudentWithMarks(StudentDTO dto) {
         if(dto.getName() == null || dto.getName().isEmpty()) {
             throw new IllegalArgumentException("Student name is required");
@@ -78,7 +129,7 @@ public class StudentService {
         }
     }
 
-    // ✅ New method: Top 3 performers by year based on total marks
+    // Top 3 performers by year based on total marks
     public Map<Integer, List<Map<String, Object>>> getTop3PerformersByYear() {
         List<Student> students = studentRepo.findAll();
 

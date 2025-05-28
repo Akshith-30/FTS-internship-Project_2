@@ -1,10 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+    <title>Students by Section</title>
+    <link rel="stylesheet" href="/css/studentsBySection.css">
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600&display=swap" rel="stylesheet">
 
+</head>
+
+<body>
+<a href="dashboard.html" class="back-button-dark">
+        <span class="icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24"
+                 class="back-icon">
+                <path d="M15 18l-6-6 6-6" stroke="#e0e0e0" stroke-width="2" fill="none" stroke-linecap="round"
+                      stroke-linejoin="round" />
+            </svg>
+        </span>
+    <span class="text">Back to Dashboard</span>
+</a>
+
+
+<div class="container">
+    <h2>List of Students by Section</h2>
+    <div class="subtitle">Quickly access lists of students organized by their academic sections. Performance details
+        included.</div>
+    <div class="filters">
+        <label class="filter-label" for="year-filter">Year:</label>
+        <select id="year-filter">
+            <option value="">All Years</option>
+            <option value="1">Year 1</option>
+            <option value="2">Year 2</option>
+            <option value="3">Year 3</option>
+            <option value="4">Year 4</option>
+        </select>
+        <label class="filter-label" for="section-filter">Section:</label>
+        <select id="section-filter">
+            <option value="">All Sections</option>
+            <option value="A">A</option>
+            <option value="B">B</option>
+            <option value="C">C</option>
+            <option value="D">D</option>
+        </select>
+    </div>
+    <table id="students-table">
+        <thead>
+        <tr>
+            <th>Student Info</th>
+            <th>Year</th>
+            <th>Section</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Student rows will be dynamically inserted here -->
+        </tbody>
+    </table>
+    <div style="color:#b0b3b8; margin-top:18px; font-size:0.97em;" id="showing-count">Showing 0 of 0 students</div>
+</div>
+<script src="/js/studentsBySection.js"></script>
 </body>
+
 </html>
