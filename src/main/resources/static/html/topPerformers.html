@@ -8,13 +8,21 @@
 </head>
 <body>
 
+<!-- 🆕 Back button top-left -->
+<a href="dashboard.html" class="top-back-btn">
+    <span class="back-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24">
+            <path d="M15 18l-6-6 6-6" stroke="#e0e0e0" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+    </span>
+    <span class="back-label">Back to Dashboard</span>
+</a>
+
 <h1 class="landing-text">Top 3 Performers by Year</h1>
 
 <div id="performerContainer" class="table-wrapper"></div>
 
-<div class="footer-back-button">
-    <a href="dashboard.html" class="back-btn">← Back to Dashboard</a>
-</div>
+
 
 <script>
     fetch('/api/students/top-performers')

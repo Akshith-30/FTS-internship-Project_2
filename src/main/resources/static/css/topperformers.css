@@ -38,8 +38,8 @@ body {
 .student-table td {
     padding: 12px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    vertical-align: middle;      /* ✅ Vertically center text */
-    text-align: center;          /* ✅ Horizontally center text */
+    vertical-align: middle;
+    text-align: center;
 }
 
 .student-table th {
@@ -52,34 +52,52 @@ body {
     background-color: rgba(255, 255, 255, 0.05);
 }
 
-/* Back button at bottom */
-.footer-back-button {
-    width: 100%;
-    max-width: 1000px;
-    text-align: center;
-    margin-top: auto;
-    padding-top: 20px;
-    padding-bottom: 30px;
-}
+/* Footer button */
 
-.back-btn {
-    display: inline-block;
+
+/* Top left icon-only button that expands */
+.top-back-btn {
+    position: absolute;
+    top: 20px;
+    left: 20px;
     background: #1c1c1c;
-    color: #787878;
-    padding: 12px 25px;
-    border-radius: 99px;
-    text-decoration: none;
+    color: #fff;
+    padding: 10px 16px;
+    border-radius: 12px;
+    border: 1px solid transparent;
     font-weight: 600;
-    transition: all 0.3s ease;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 20px;
+    transition: width 0.4s ease, background-color 0.3s ease, transform 0.3s ease;
+    gap: 10px;
 }
 
-.back-btn:hover {
+/* Expand button on hover */
+.top-back-btn:hover {
+    width: 200px;
     background: #000;
-    color: #fff;
+    border: 1px solid #ffffff;
     transform: scale(1.05);
 }
 
-/* Optional Responsive Tweak */
+/* Text label hidden by default */
+.back-label {
+    opacity: 0;
+    transition: opacity 0.3s ease 0.4s; /* delay to show after expand */
+}
+
+/* Show label after expand */
+.top-back-btn:hover .back-label {
+    opacity: 1;
+}
+
+
+
+/* Responsive tweak */
 @media (max-width: 768px) {
     .landing-text {
         font-size: 1.2rem;
