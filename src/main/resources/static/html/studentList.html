@@ -1,10 +1,60 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>Student List</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/studentList.css">
 </head>
 <body>
-<h2>Student List Page (Dummy)</h2>
-<a href="dashboard.html">Back to Dashboard</a>
+
+<h1 class="landing-text">Student Records </h1>
+
+<div class="table-wrapper">
+    <table class="student-table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Roll Number</th>
+            <th>Year</th>
+            <th>Section</th>
+            <th>Grade</th>
+        </tr>
+        </thead>
+        <tbody id="studentTableBody">
+        <!-- Rows will be injected here -->
+        </tbody>
+    </table>
+</div>
+
+<script>
+    fetch('/api/students')
+        .then(res => res.json())
+        .then(data => {
+            const tbody = document.getElementById("studentTableBody");
+            data.forEach(student => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${student.id}</td>
+                    <td>${student.name}</td>
+                    <td>${student.rollNumber}</td>
+                    <td>${student.year}</td>
+                    <td>${student.section}</td>
+                    <td>${student.grade ?? '-'}</td>
+                `;
+                tbody.appendChild(row);
+            });
+        })
+        .catch(error => {
+            const tbody = document.getElementById("studentTableBody");
+            tbody.innerHTML = `<tr><td colspan="6" style="color:white;">Error loading students.</td></tr>`;
+            console.error("Error fetching students:", error);
+        });
+</script>
+<div class="footer-back-button">
+    <a href="dashboard.html" class="back-btn">← Back to Dashboard</a>
+</div>
+
 </body>
 </html>

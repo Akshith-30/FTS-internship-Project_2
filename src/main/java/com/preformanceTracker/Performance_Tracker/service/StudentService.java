@@ -10,8 +10,8 @@ import com.preformanceTracker.Performance_Tracker.repository.SubjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class StudentService {
@@ -25,8 +25,11 @@ public class StudentService {
     @Autowired
     private GradeRepository gradeRepo;
 
+    public List<Student> getAllStudents() {
+        return studentRepo.findAll();
+    }
+
     public void saveStudentWithMarks(StudentDTO dto) {
-        // Basic validation
         if(dto.getName() == null || dto.getName().isEmpty()) {
             throw new IllegalArgumentException("Student name is required");
         }
@@ -43,7 +46,6 @@ public class StudentService {
             throw new IllegalArgumentException("Marks cannot be empty");
         }
 
-        // Create and save student entity
         Student student = new Student();
         student.setName(dto.getName());
         student.setRollNumber(dto.getRollNumber());
@@ -52,13 +54,11 @@ public class StudentService {
 
         Student savedStudent = studentRepo.save(student);
 
-        // Save each grade
         for (Map.Entry<String, Integer> entry : dto.getMarks().entrySet()) {
             String subjectName = entry.getKey();
             Integer marks = entry.getValue();
 
             Optional<Subject> optionalSubject = subjectRepo.findByNameIgnoreCase(subjectName);
-
             if(optionalSubject.isEmpty()) {
                 throw new RuntimeException("Subject not found: " + subjectName);
             }
@@ -76,5 +76,42 @@ public class StudentService {
 
             gradeRepo.save(grade);
         }
+    }
+
+    // ✅ New method: Top 3 performers by year based on total marks
+    public Map<Integer, List<Map<String, Object>>> getTop3PerformersByYear() {
+        List<Student> students = studentRepo.findAll();
+
+        // Map student to total marks
+        List<Map<String, Object>> studentScores = students.stream().map(student -> {
+            int totalMarks = gradeRepo.findByStudent(student)
+                    .stream()
+                    .mapToInt(Grade::getMarks)
+                    .sum();
+
+            Map<String, Object> info = new LinkedHashMap<>();
+            info.put("id", student.getId());
+            info.put("name", student.getName());
+            info.put("rollNumber", student.getRollNumber());
+            info.put("section", student.getSection());
+            info.put("year", student.getYear());
+            info.put("totalMarks", totalMarks);
+            return info;
+        }).collect(Collectors.toList());
+
+        // Group by year and sort within each year
+        return studentScores.stream()
+                .collect(Collectors.groupingBy(
+                        s -> (Integer) s.get("year"),
+                        Collectors.collectingAndThen(
+                                Collectors.toList(),
+                                list -> list.stream()
+                                        .sorted((a, b) -> Integer.compare(
+                                                (int) b.get("totalMarks"), (int) a.get("totalMarks")
+                                        ))
+                                        .limit(3)
+                                        .collect(Collectors.toList())
+                        )
+                ));
     }
 }

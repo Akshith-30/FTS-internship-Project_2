@@ -2,9 +2,60 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Top Performers</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/topperformers.css">
 </head>
 <body>
+
+<h1 class="landing-text">Top 3 Performers by Year</h1>
+
+<div id="performerContainer" class="table-wrapper"></div>
+
+<div class="footer-back-button">
+    <a href="dashboard.html" class="back-btn">← Back to Dashboard</a>
+</div>
+
+<script>
+    fetch('/api/students/top-performers')
+        .then(res => res.json())
+        .then(data => {
+            const container = document.getElementById("performerContainer");
+            Object.keys(data).sort().forEach(year => {
+                const table = document.createElement("table");
+                table.className = "student-table";
+
+                const header = `
+                    <thead>
+                        <tr><th colspan="4">Year ${year}</th></tr>
+                        <tr>
+                            <th>Name</th>
+                            <th>Roll Number</th>
+                            <th>Section</th>
+                            <th>Total Marks</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                `;
+
+                const rows = data[year].map(s => `
+                    <tr>
+                        <td>${s.name}</td>
+                        <td>${s.rollNumber}</td>
+                        <td>${s.section}</td>
+                        <td>${s.totalMarks}</td>
+                    </tr>
+                `).join('');
+
+                table.innerHTML = header + rows + "</tbody>";
+                container.appendChild(table);
+            });
+        })
+        .catch(err => {
+            document.getElementById("performerContainer").innerHTML = `<p style="color:white;">Failed to load performers.</p>`;
+            console.error("Fetch error:", err);
+        });
+</script>
 
 </body>
 </html>
