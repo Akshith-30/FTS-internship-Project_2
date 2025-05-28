@@ -8,6 +8,18 @@
 </head>
 <body>
 
+<!-- Back to Dashboard Button -->
+<a href="dashboard.html" class="back-button-dark">
+    <span class="icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24"
+             class="back-icon">
+            <path d="M15 18l-6-6 6-6" stroke="#e0e0e0" stroke-width="2" fill="none" stroke-linecap="round"
+                  stroke-linejoin="round" />
+        </svg>
+    </span>
+    <span class="text">Back to Dashboard</span>
+</a>
+
 <h1 class="landing-text">Student Records</h1>
 
 <div class="table-wrapper">
@@ -29,7 +41,7 @@
 </div>
 
 <script>
-    fetch('/api/students/with-grades') // updated endpoint
+    fetch('/api/students/with-grades')
         .then(res => res.json())
         .then(data => {
             const tbody = document.getElementById("studentTableBody");
@@ -52,10 +64,6 @@
             console.error("Error fetching students:", error);
         });
 </script>
-
-<div class="footer-back-button">
-    <a href="dashboard.html" class="back-btn">← Back to Dashboard</a>
-</div>
 
 </body>
 </html>
