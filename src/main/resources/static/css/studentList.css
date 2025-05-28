@@ -94,7 +94,7 @@ body {
     align-items: center;
     overflow: hidden;
     gap: 20px;
-    padding: 13px 25px;
+    padding: 13px 20px;
     font-size: 1rem;
     font-weight: 600;
     text-decoration: none;
@@ -123,13 +123,9 @@ body {
     opacity: 1;
 }
 
-.back-button-dark .icon {
-    margin-right: 4px; /* Move icon slightly to the left */
-}
-
 .back-button-dark .icon svg {
     display: block;
     height: 18px;
     width: 18px;
-    vertical-align: middle;
+    margin-right: -20
 }
