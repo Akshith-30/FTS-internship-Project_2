@@ -12,3 +12,4 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
     List<Student> findByYear(Integer year);
     List<Student> findBySection(String section);
 }
+//

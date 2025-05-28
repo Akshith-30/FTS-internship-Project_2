@@ -61,5 +61,3 @@ sectionFilter.addEventListener('change', fetchAndRenderStudents);
 
 // Initial table load
 fetchAndRenderStudents();
-//
-//

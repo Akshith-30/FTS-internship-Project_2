@@ -30,3 +30,4 @@ public class Grade {
     @Column(nullable = false)
     private int marks;
 }
+//
