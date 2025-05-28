@@ -1,27 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>Student List</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../css/studentList.css" />
     <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../css/studentList.css">
 </head>
 <body>
 
-<!-- Back to Dashboard Button -->
+<!-- 🔙 Animated Back to Dashboard Button -->
 <a href="dashboard.html" class="back-button-dark">
     <span class="icon">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24"
-             class="back-icon">
-            <path d="M15 18l-6-6 6-6" stroke="#e0e0e0" stroke-width="2" fill="none" stroke-linecap="round"
-                  stroke-linejoin="round" />
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24">
+            <path d="M15 18l-6-6 6-6" stroke="#e0e0e0" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" />
         </svg>
     </span>
     <span class="text">Back to Dashboard</span>
 </a>
 
+<!-- Page Title -->
 <h1 class="landing-text">Student Records</h1>
 
+<!-- Table Container -->
 <div class="table-wrapper">
     <table class="student-table">
         <thead>
@@ -35,11 +36,12 @@
         </tr>
         </thead>
         <tbody id="studentTableBody">
-        <!-- Rows will be injected here -->
+        <!-- Student rows will be dynamically injected here -->
         </tbody>
     </table>
 </div>
 
+<!-- Data Fetch Script -->
 <script>
     fetch('/api/students/with-grades')
         .then(res => res.json())

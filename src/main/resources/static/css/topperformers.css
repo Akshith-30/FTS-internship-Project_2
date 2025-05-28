@@ -15,7 +15,7 @@ body {
     font-weight: 600;
     color: #d1d1d1;
     text-align: center;
-    margin-bottom: 30px;
+    margin: 60px 0 30px;
 }
 
 .table-wrapper {
@@ -23,7 +23,7 @@ body {
     max-width: 1000px;
 }
 
-/* Table Styles */
+/* Table Styling */
 .student-table {
     width: 100%;
     border-collapse: collapse;
@@ -52,52 +52,69 @@ body {
     background-color: rgba(255, 255, 255, 0.05);
 }
 
-/* Footer button */
-
-
-/* Top left icon-only button that expands */
-.top-back-btn {
+/* Back Button (hover expandable) */
+.back-dashboard-btn {
     position: absolute;
     top: 20px;
     left: 20px;
-    background: #1c1c1c;
-    color: #fff;
-    padding: 10px 16px;
-    border-radius: 12px;
-    border: 1px solid transparent;
-    font-weight: 600;
-    text-decoration: none;
     display: flex;
     align-items: center;
+    background: rgba(30, 30, 30, 0.85);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 20px;
+    font-size: 16px;
+    font-weight: 600;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+    z-index: 100;
+    overflow: hidden;
+    padding: 10px 16px;
+    border: 2px solid transparent;
+    min-width: 48px;
+    min-height: 48px;
+    transition:
+        background 0.2s,
+        box-shadow 0.2s,
+        border-color 0.2s,
+        transform 0.2s,
+        padding 0.35s cubic-bezier(.4,2,.6,1),
+        min-width 0.35s cubic-bezier(.4,2,.6,1);
+    cursor: pointer;
+}
+
+.back-dashboard-btn .icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 24px;
+}
+
+.back-dashboard-btn .text {
+    max-width: 0;
+    opacity: 0;
+    margin-left: 0;
     overflow: hidden;
     white-space: nowrap;
-    width: 20px;
-    transition: width 0.4s ease, background-color 0.3s ease, transform 0.3s ease;
-    gap: 10px;
+    transition: max-width 0.35s cubic-bezier(.4,2,.6,1), opacity 0.2s, margin-left 0.2s;
 }
 
-/* Expand button on hover */
-.top-back-btn:hover {
-    width: 200px;
+.back-dashboard-btn:hover,
+.back-dashboard-btn:focus {
     background: #000;
-    border: 1px solid #ffffff;
-    transform: scale(1.05);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.13);
+    border-color: #fff;
+    transform: scale(1.04);
+    padding: 10px 28px 10px 20px;
+    min-width: 180px;
 }
 
-/* Text label hidden by default */
-.back-label {
-    opacity: 0;
-    transition: opacity 0.3s ease 0.4s; /* delay to show after expand */
-}
-
-/* Show label after expand */
-.top-back-btn:hover .back-label {
+.back-dashboard-btn:hover .text,
+.back-dashboard-btn:focus .text {
+    max-width: 160px;
     opacity: 1;
+    margin-left: 14px;
 }
 
-
-
-/* Responsive tweak */
 @media (max-width: 768px) {
     .landing-text {
         font-size: 1.2rem;
@@ -107,5 +124,13 @@ body {
     .student-table td {
         font-size: 14px;
         padding: 10px;
+    }
+
+    .back-dashboard-btn:hover {
+        min-width: 140px;
+    }
+
+    .back-dashboard-btn:hover .text {
+        max-width: 100px;
     }
 }
