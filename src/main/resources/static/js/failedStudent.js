@@ -2,7 +2,10 @@ const yearFilter = document.getElementById('year-filter');
 const tableBody = document.querySelector('#failed-students-table tbody');
 const showingCount = document.getElementById('showing-count');
 
-// Optional: Add a loading indicator
+function getSection(rollNumber) {
+    return rollNumber % 2 === 0 ? 'B' : 'A';
+}
+
 function setLoading(isLoading) {
     if (isLoading) {
         tableBody.innerHTML = `<tr><td colspan="4" style="text-align:center;">Loading...</td></tr>`;
@@ -11,9 +14,7 @@ function setLoading(isLoading) {
 }
 
 function fetchFailedStudents() {
-    const year = yearFilter.value;
-
-    // ✅ Updated URL format to match Spring Boot controller expecting path variable
+    const year = yearFilter.value.trim();
     let url = "/api/failed-students";
     if (year) url += `/${year}`;
 
@@ -38,11 +39,13 @@ function fetchFailedStudents() {
                     .map(([subject, marks]) => `${subject}: ${marks}`)
                     .join("<br>");
 
+                const section = student.section || getSection(student.rollNumber || 0);
+
                 const row = document.createElement('tr');
                 row.innerHTML = `
                     <td>${student.name}<br><small>${student.rollNumber}</small></td>
                     <td>${student.year}</td>
-                    <td>${student.section}</td>
+                    <td>${section}</td>
                     <td>${failedSubjects}</td>
                 `;
                 tableBody.appendChild(row);
@@ -57,8 +60,5 @@ function fetchFailedStudents() {
         });
 }
 
-// Attach event listener
 yearFilter.addEventListener('change', fetchFailedStudents);
-
-// Initial load
 fetchFailedStudents();

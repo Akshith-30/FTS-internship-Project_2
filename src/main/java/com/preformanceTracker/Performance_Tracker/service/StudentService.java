@@ -26,13 +26,13 @@ public class StudentService {
     @Autowired
     private GradeRepository gradeRepo;
 
-    // Fetch all students (as entities)
     public List<Student> getAllStudents() {
         return studentRepo.findAll();
     }
 
     public List<StudentDTO> getStudentsByYearAndSection(Integer year, String section) {
         List<Student> students;
+
         if (year != null && section != null && !section.isEmpty()) {
             students = studentRepo.findByYearAndSection(year, section);
         } else if (year != null) {
@@ -64,7 +64,6 @@ public class StudentService {
             dto.setMarks(marksMap);
             dto.setTotalMarks(totalMarks);
 
-            // Dynamically calculate grade based on total marks
             dto.setGrade(calculateGrade(totalMarks));
 
             result.add(dto);
@@ -72,7 +71,6 @@ public class StudentService {
         return result;
     }
 
-    // Simple grade letter assignment (used in DTO with total marks)
     private String calculateGrade(int totalMarks) {
         if (totalMarks >= 450) return "A";
         else if (totalMarks >= 400) return "B";
@@ -80,21 +78,20 @@ public class StudentService {
         else return "D";
     }
 
-    // Save a new student with marks
     public void saveStudentWithMarks(StudentDTO dto) {
-        if(dto.getName() == null || dto.getName().isEmpty()) {
+        if (dto.getName() == null || dto.getName().isEmpty()) {
             throw new IllegalArgumentException("Student name is required");
         }
-        if(dto.getRollNumber() == null || dto.getRollNumber().isEmpty()) {
+        if (dto.getRollNumber() == null || dto.getRollNumber().isEmpty()) {
             throw new IllegalArgumentException("Roll number is required");
         }
-        if(dto.getYear() < 1 || dto.getYear() > 4) {
+        if (dto.getYear() < 1 || dto.getYear() > 4) {
             throw new IllegalArgumentException("Year must be between 1 and 4");
         }
-        if(dto.getSection() == null || dto.getSection().isEmpty()) {
+        if (dto.getSection() == null || dto.getSection().isEmpty()) {
             throw new IllegalArgumentException("Section is required");
         }
-        if(dto.getMarks() == null || dto.getMarks().isEmpty()) {
+        if (dto.getMarks() == null || dto.getMarks().isEmpty()) {
             throw new IllegalArgumentException("Marks cannot be empty");
         }
 
@@ -111,7 +108,7 @@ public class StudentService {
             Integer marks = entry.getValue();
 
             Optional<Subject> optionalSubject = subjectRepo.findByNameIgnoreCase(subjectName);
-            if(optionalSubject.isEmpty()) {
+            if (optionalSubject.isEmpty()) {
                 throw new RuntimeException("Subject not found: " + subjectName);
             }
 
@@ -130,11 +127,9 @@ public class StudentService {
         }
     }
 
-    // Top 3 performers by year based on total marks
     public Map<Integer, List<Map<String, Object>>> getTop3PerformersByYear() {
         List<Student> students = studentRepo.findAll();
 
-        // Map student to total marks
         List<Map<String, Object>> studentScores = students.stream().map(student -> {
             int totalMarks = gradeRepo.findByStudent(student)
                     .stream()
@@ -151,7 +146,6 @@ public class StudentService {
             return info;
         }).collect(Collectors.toList());
 
-        // Group by year and sort within each year
         return studentScores.stream()
                 .collect(Collectors.groupingBy(
                         s -> (Integer) s.get("year"),
@@ -167,7 +161,6 @@ public class StudentService {
                 ));
     }
 
-    // ✅ NEW: Return all students with calculated A/B/C grades
     public List<StudentViewDTO> getAllStudentViews() {
         List<Student> students = studentRepo.findAll();
 

@@ -16,11 +16,10 @@ public class FailedStudentController {
     @Autowired
     private FailedStudentService failedStudentService;
 
-    // GET endpoint to fetch failed students by year
-    @GetMapping("/{year}")
-    public ResponseEntity<List<FailedStudentDTO>> getFailedStudentsByYear(@PathVariable int year) {
+    // ✅ Handles both /api/failed-students and /api/failed-students/{year}
+    @GetMapping({ "", "/{year}" })
+    public ResponseEntity<List<FailedStudentDTO>> getFailedStudents(@PathVariable(required = false) Integer year) {
         List<FailedStudentDTO> failedStudents = failedStudentService.getFailedStudentsByYear(year);
         return ResponseEntity.ok(failedStudents);
     }
 }
-

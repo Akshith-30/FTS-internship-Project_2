@@ -1,3 +1,4 @@
+// Subject.java
 package com.preformanceTracker.Performance_Tracker.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -17,7 +18,7 @@ public class Subject {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;  // ✅ Changed from Long to Integer to match MySQL INT column
+    private Integer id;
 
     @Column(nullable = false, unique = true)
     private String name;

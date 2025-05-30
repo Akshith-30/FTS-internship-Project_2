@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class FailedStudentService {
@@ -16,39 +15,43 @@ public class FailedStudentService {
     @Autowired
     private GradeRepository gradeRepository;
 
-    private static final int PASSING_MARKS = 40;
+    public List<FailedStudentDTO> getFailedStudentsByYear(Integer year) {
+        List<Grade> failedGrades;
 
-    public List<FailedStudentDTO> getFailedStudentsByYear(int year) {
-        // Fetch all grades where marks < 40 for the specified year
-        List<Grade> failedGrades = gradeRepository.findByYearAndMarksLessThan(year, PASSING_MARKS);
-
-        // Group grades by student
-        Map<Student, List<Grade>> failedGradesByStudent = failedGrades.stream()
-                .collect(Collectors.groupingBy(Grade::getStudent));
-
-        // Convert each student + their failed subjects to FailedStudentDTO
-        List<FailedStudentDTO> dtos = new ArrayList<>();
-
-        for (Map.Entry<Student, List<Grade>> entry : failedGradesByStudent.entrySet()) {
-            Student student = entry.getKey();
-            List<Grade> grades = entry.getValue();
-
-            Map<String, Integer> subjectMarks = grades.stream()
-                    .collect(Collectors.toMap(
-                            g -> g.getSubject().getName(),
-                            Grade::getMarks
-                    ));
-
-            FailedStudentDTO dto = new FailedStudentDTO();
-            dto.setName(student.getName());
-            dto.setRollNumber(student.getRollNumber());
-            dto.setYear(year);
-            dto.setSection(student.getSection());
-            dto.setSubjectMarks(subjectMarks);
-
-            dtos.add(dto);
+        if (year != null) {
+            failedGrades = gradeRepository.findByStudentYearAndMarksLessThan(year, 35);
+        } else {
+            failedGrades = gradeRepository.findByMarksLessThan(35);
         }
 
-        return dtos;
+        Map<Student, Map<String, Integer>> studentFailures = new HashMap<>();
+
+        for (Grade grade : failedGrades) {
+            Student student = grade.getStudent();
+            String subjectName = grade.getSubject().getName();
+            int marks = grade.getMarks();
+
+            studentFailures
+                    .computeIfAbsent(student, k -> new HashMap<>())
+                    .put(subjectName, marks);
+        }
+
+        List<FailedStudentDTO> result = new ArrayList<>();
+
+        for (Map.Entry<Student, Map<String, Integer>> entry : studentFailures.entrySet()) {
+            Student student = entry.getKey();
+            Map<String, Integer> failedSubjects = entry.getValue();
+
+            FailedStudentDTO dto = new FailedStudentDTO(
+                    student.getName(),
+                    student.getRollNumber(),
+                    student.getYear(),
+                    student.getSection(),
+                    failedSubjects
+            );
+            result.add(dto);
+        }
+
+        return result;
     }
 }

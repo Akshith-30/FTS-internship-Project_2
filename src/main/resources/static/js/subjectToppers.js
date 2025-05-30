@@ -6,7 +6,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let allData = [];
 
-  // Fetch top students data from backend
   async function fetchTopStudents() {
     try {
       const response = await fetch("/api/subjects/toppers");
@@ -16,11 +15,10 @@ document.addEventListener("DOMContentLoaded", () => {
       renderTable();
     } catch (error) {
       console.error(error);
-      tableBody.innerHTML = `<tr><td colspan="4">Error loading data.</td></tr>`;
+      tableBody.innerHTML = `<tr><td colspan="5">Error loading data.</td></tr>`;
     }
   }
 
-  // Populate unique subjects in subject filter dropdown
   function populateSubjectFilter() {
     const subjects = [...new Set(allData.map(item => item.subjectName))];
     subjects.forEach(subject => {
@@ -31,7 +29,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Filter and render table rows
   function renderTable() {
     const subjectValue = subjectFilter.value;
     const yearValue = yearFilter.value;
@@ -48,14 +45,14 @@ document.addEventListener("DOMContentLoaded", () => {
     tableBody.innerHTML = "";
 
     if (filtered.length === 0) {
-      tableBody.innerHTML = `<tr><td colspan="4">No records found.</td></tr>`;
+      tableBody.innerHTML = `<tr><td colspan="5">No records found.</td></tr>`;
     } else {
-      filtered.forEach(({ subjectName, studentName, marks, year }) => {
+      filtered.forEach(({ subjectName, studentName, rollNumber, marks, year }) => {
         const tr = document.createElement("tr");
-
         tr.innerHTML = `
           <td>${subjectName}</td>
           <td>${studentName}</td>
+          <td>${rollNumber}</td>
           <td>${marks}</td>
           <td>${year}</td>
         `;
@@ -66,10 +63,8 @@ document.addEventListener("DOMContentLoaded", () => {
     showingCount.textContent = `Showing ${filtered.length} record${filtered.length !== 1 ? 's' : ''}`;
   }
 
-  // Event listeners for filters
   subjectFilter.addEventListener("change", renderTable);
   yearFilter.addEventListener("change", renderTable);
 
   fetchTopStudents();
 });
-//

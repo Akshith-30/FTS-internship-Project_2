@@ -65,21 +65,15 @@ document.getElementById("addStudentForm").addEventListener("submit", async (e) =
       body: JSON.stringify(studentData),
     });
 
+    const data = await response.json();
+
     if (response.ok) {
-      alert("Student added successfully!");
+      alert("Student added successfully");
       e.target.reset();
-      await loadSubjects();
     } else {
-      let result = {};
-      try {
-        result = await response.json();
-      } catch {
-        alert("Failed to add student: Unknown error");
-        return;
-      }
-      alert("Failed to add student: " + (result.message || "Unknown error"));
+      alert("Failed to add student: " + (data.message || "Unknown error"));
     }
-  } catch (error) {
-    alert("Error: " + error.message);
+  } catch (err) {
+    alert("An error occurred: " + err.message);
   }
 });

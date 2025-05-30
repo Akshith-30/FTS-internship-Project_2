@@ -18,7 +18,6 @@ public class GradeService {
         this.studentRepository = studentRepository;
     }
 
-
     public Map<String, List<Student>> getStudentsByGradeLevel() {
         List<Object[]> avgMarksList = gradeRepository.findAverageMarksPerStudent();
 

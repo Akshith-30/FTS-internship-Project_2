@@ -1,6 +1,6 @@
 package com.preformanceTracker.Performance_Tracker.controller;
 
-import com.preformanceTracker.Performance_Tracker.dto.TopStudentDTO;  // Make sure this matches your actual package
+import com.preformanceTracker.Performance_Tracker.dto.TopStudentDTO;
 import com.preformanceTracker.Performance_Tracker.service.SubjectToppersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +14,7 @@ import java.util.List;
 public class SubjectToppersController {
 
     @Autowired
-    private SubjectToppersService subjectToppersService;  // Changed from GradeService
+    private SubjectToppersService subjectToppersService;
 
     @GetMapping("/toppers")
     public ResponseEntity<List<TopStudentDTO>> getTop3PerSubjectPerYear() {
@@ -22,4 +22,3 @@ public class SubjectToppersController {
         return ResponseEntity.ok(toppers);
     }
 }
-//

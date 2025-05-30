@@ -14,26 +14,22 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/students")
-@CrossOrigin(origins = "*")  // Optional: Allow cross-origin if accessing via browser
+@CrossOrigin(origins = "*")
 public class StudentController {
 
     @Autowired
     private StudentService studentService;
 
-    // ✅ POST: Add a new student with marks
     @PostMapping
     public ResponseEntity<?> addStudent(@RequestBody StudentDTO dto) {
         try {
             studentService.saveStudentWithMarks(dto);
             return ResponseEntity.ok(Map.of("message", "Student added successfully"));
         } catch (Exception e) {
-            return ResponseEntity
-                    .badRequest()
-                    .body(Map.of("message", e.getMessage()));
+            return ResponseEntity.badRequest().body(Map.of("message", e.getMessage()));
         }
     }
 
-    // ✅ GET: Fetch all students (raw entities, not recommended for frontend)
     @GetMapping
     public ResponseEntity<List<Student>> getAllStudents() {
         try {
@@ -44,7 +40,6 @@ public class StudentController {
         }
     }
 
-    // ✅ GET: Top 3 performers by year
     @GetMapping("/top-performers")
     public ResponseEntity<?> getTopPerformersByYear() {
         try {
@@ -58,7 +53,6 @@ public class StudentController {
         }
     }
 
-    //  Get students with grade A/B/C (DTO version for frontend)
     @GetMapping("/with-grades")
     public ResponseEntity<List<StudentViewDTO>> getStudentsWithGrades() {
         try {
