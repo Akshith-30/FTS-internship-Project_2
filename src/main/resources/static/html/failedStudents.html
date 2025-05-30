@@ -1,10 +1,236 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="UTF-8" />
+    <title>Failed Students</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600&display=swap" rel="stylesheet" />
+    <style>
+        body {
+          background: #232326 url('/images/bg3.jpg') no-repeat center center fixed;
+          background-size: cover;
+          color: #fff;
+          font-family: 'Lexend', sans-serif;
+          margin: 0;
+          padding: 0;
+        }
+
+        .container {
+          max-width: 800px;
+          margin: 40px auto;
+          padding: 28px;
+          background: rgba(30,30,32,0.35);
+          border-radius: 24px;
+          backdrop-filter: blur(18px) saturate(160%);
+          border: 1.5px solid rgba(255, 255, 255, 0.12);
+        }
+
+        table {
+          width: 100%;
+          border-collapse: collapse;
+          margin-top: 20px;
+          color: #fff;
+        }
+
+        th, td {
+          padding: 10px;
+          border: 1px solid #444;
+          vertical-align: top;
+        }
+
+        th {
+          background: #444;
+          font-weight: 600;
+        }
+
+        .filters {
+          margin-bottom: 20px;
+        }
+
+        select {
+          padding: 6px;
+          border-radius: 8px;
+          border: 1px solid #555;
+          background: #232325;
+          color: white;
+          font-size: 1em;
+        }
+
+        .filter-label {
+          margin-right: 8px;
+          font-weight: 600;
+          color: #b0b3b8;
+        }
+
+        #showing-count {
+          color: #b0b3b8;
+          margin-top: 18px;
+          font-size: 0.97em;
+          font-style: italic;
+        }
+
+        /* 🔙 Animated Back to Dashboard Button */
+        .back-button-dark {
+          display: inline-flex;
+          align-items: center;
+          margin: 24px 0 16px 16px;
+          padding: 12px 16px;
+          background-color: #1e1e1e;
+          border-radius: 12px;
+          text-decoration: none;
+          color: #fff;
+          gap: 8px;
+          border: 1px solid transparent;
+          white-space: nowrap;
+          transition: background-color 0.3s ease, border-color 0.3s ease;
+          user-select: none;
+        }
+
+        .back-button-dark:hover,
+        .back-button-dark:focus {
+          background-color: #2c2c2c;
+          border-color: #fff;
+          outline: none;
+        }
+
+        .back-button-dark .text {
+          opacity: 0;
+          max-width: 0;
+          overflow: hidden;
+          white-space: nowrap;
+          transition: opacity 0.3s ease, max-width 0.3s ease;
+          display: inline-block;
+        }
+
+        .back-button-dark:hover .text {
+          opacity: 1;
+          max-width: 200px;
+        }
+
+        .back-button-dark .icon svg {
+          height: 20px;
+          width: 20px;
+          stroke: #e0e0e0;
+        }
+    </style>
 </head>
 <body>
+<!-- 🔙 Animated Back to Dashboard Button -->
+<a href="dashboard.html" class="back-button-dark" aria-label="Back to Dashboard">
+    <span class="icon" aria-hidden="true">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24">
+        <path d="M15 18l-6-6 6-6" stroke="#e0e0e0" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+    </span>
+    <span class="text">Back to Dashboard</span>
+</a>
 
+<div class="container">
+    <h2>Failed Students by Year</h2>
+
+    <div class="filters">
+        <label for="year-filter" class="filter-label">Year:</label>
+        <select id="year-filter" aria-controls="failed-students-table">
+            <option value="">All Years</option>
+            <option value="1">Year 1</option>
+            <option value="2">Year 2</option>
+            <option value="3">Year 3</option>
+            <option value="4">Year 4</option>
+        </select>
+    </div>
+
+    <table id="failed-students-table" aria-live="polite" role="table" aria-label="Failed students table">
+        <thead>
+        <tr>
+            <th scope="col">Student Name</th>
+            <th scope="col">Roll No</th>
+            <th scope="col">Section</th>
+            <th scope="col">Subjects Failed</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Rows inserted here -->
+        </tbody>
+    </table>
+
+    <div id="showing-count">Showing 0 of 0 failed students</div>
+</div>
+
+<script>
+    const studentData = [
+      { name: "Sumana", subject: "Computer Science", roll: 15, marks: 94, year: 3 },
+      { name: "Tanvi", subject: "Computer Science", roll: 16, marks: 34, year: 3 },
+      { name: "Mihir", subject: "Computer Science", roll: 17, marks: 89, year: 3 },
+      { name: "Rohit", subject: "Computer Science", roll: 30, marks: 33, year: 4 },
+      { name: "Sneha", subject: "Computer Science", roll: 33, marks: 90, year: 4 },
+      { name: "Ravi", subject: "Computer Science", roll: 31, marks: 87, year: 4 },
+      { name: "Kushali", subject: "Mathematics", roll: 25, marks: 92, year: 2 },
+      { name: "Aditya", subject: "Mathematics", roll: 26, marks: 90, year: 2 },
+      { name: "Reema", subject: "Mathematics", roll: 27, marks: 20, year: 2 },
+      { name: "Vikram", subject: "Mathematics", roll: 40, marks: 91, year: 1 },
+      { name: "Priya", subject: "Mathematics", roll: 41, marks: 30, year: 1 },
+      { name: "Kiran", subject: "Mathematics", roll: 42, marks: 87, year: 1 },
+      { name: "Akshita", subject: "Science", roll: 5, marks: 96, year: 4 },
+      { name: "Dev", subject: "Science", roll: 6, marks: 92, year: 4 },
+      { name: "Isha", subject: "Science", roll: 7, marks: 34, year: 4 },
+      { name: "Aanya", subject: "Science", roll: 8, marks: 93, year: 2 },
+      { name: "Rahul", subject: "Science", roll: 9, marks: 15, year: 2 },
+      { name: "Tina", subject: "Science", roll: 10, marks: 87, year: 2 },
+      { name: "Pooja", subject: "English", roll: 50, marks: 95, year: 1 },
+      { name: "Manish", subject: "English", roll: 51, marks: 90, year: 1 },
+      { name: "Meena", subject: "English", roll: 52, marks: 30, year: 1 }
+    ];
+
+    const yearFilter = document.getElementById('year-filter');
+    const tableBody = document.querySelector('#failed-students-table tbody');
+    const showingCount = document.getElementById('showing-count');
+
+    function getSection(roll) {
+      return roll % 2 === 0 ? 'B' : 'A';
+    }
+
+    function filterAndGroupFailedStudents(year) {
+      let filtered = year ? studentData.filter(s => s.year === parseInt(year)) : studentData;
+      let failedOnly = filtered.filter(s => s.marks < 35);
+      const grouped = {};
+      failedOnly.forEach(s => {
+        const key = `${s.name}-${s.roll}-${s.year}`;
+        if (!grouped[key]) {
+          grouped[key] = {
+            name: s.name,
+            roll: s.roll,
+            year: s.year,
+            section: getSection(s.roll),
+            failedSubjects: []
+          };
+        }
+        grouped[key].failedSubjects.push(`${s.subject}: ${s.marks}`);
+      });
+      return Object.values(grouped);
+    }
+
+    function renderTable(year) {
+      const failedStudents = filterAndGroupFailedStudents(year);
+      tableBody.innerHTML = '';
+      if (failedStudents.length === 0) {
+        tableBody.innerHTML = `<tr><td colspan="4" style="text-align:center;">No failed students found.</td></tr>`;
+        showingCount.textContent = `Showing 0 of 0 failed students`;
+        return;
+      }
+      failedStudents.forEach(s => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${s.name}</td>
+          <td>${s.roll}</td>
+          <td>${s.section}</td>
+          <td>${s.failedSubjects.join('<br>')}</td>
+        `;
+        tableBody.appendChild(row);
+      });
+      showingCount.textContent = `Showing ${failedStudents.length} failed student${failedStudents.length !== 1 ? 's' : ''}`;
+    }
+
+    yearFilter.addEventListener('change', () => renderTable(yearFilter.value));
+    renderTable('');
+</script>
 </body>
 </html>

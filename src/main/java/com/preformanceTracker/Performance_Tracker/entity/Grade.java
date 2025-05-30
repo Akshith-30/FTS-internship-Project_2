@@ -12,6 +12,7 @@ import lombok.EqualsAndHashCode;
 @Entity
 @Table(name = "grades")
 public class Grade {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -32,4 +33,8 @@ public class Grade {
 
     @Column(nullable = false)
     private int marks;
+
+    @Column(nullable = false)
+    private int year;
+
 }

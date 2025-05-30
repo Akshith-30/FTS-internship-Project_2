@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Failed Students</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Lexend:wght@400;600&display=swap');
+
+    body {
+      background: #232326 url('../images/bg3.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: #fff;
+      font-family: 'Lexend', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 28px;
+      background: rgba(30, 30, 32, 0.35);
+      border-radius: 24px;
+      backdrop-filter: blur(18px) saturate(160%);
+      border: 1.5px solid rgba(255, 255, 255, 0.12);
+    }
+
+    h2 {
+      margin-top: 0;
+      font-size: 2rem;
+      font-weight: 600;
+      margin-bottom: 16px;
+      color: #fff;
+    }
+
+    .filters {
+      margin-bottom: 20px;
+    }
+
+    .filter-label {
+      color: #b0b3b8;
+      margin-right: 6px;
+      font-size: 1em;
+    }
+
+    select {
+      background: #232325;
+      color: #fff;
+      border: 1.5px solid #393a3f;
+      border-radius: 12px;
+      padding: 7px 12px;
+      font-size: 1em;
+    }
+
+    table {
+      width: 100%;
+      border-spacing: 0 10px;
+      color: #fff;
+    }
+
+    th, td {
+      padding: 12px;
+      background-color: rgba(40, 40, 40, 0.2);
+      text-align: left;
+    }
+
+    th {
+      background: none;
+      color: #ccc;
+      font-weight: 600;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* Back Button Styles */
+    .back-button-dark {
+      display: inline-flex;
+      align-items: center;
+      margin: 24px 0 16px 16px;
+      padding: 12px 16px;
+      background-color: #1e1e1e;
+      border-radius: 12px;
+      text-decoration: none;
+      color: #ffffff;
+      gap: 8px;
+      border: 1px solid transparent;
+      white-space: nowrap;
+      transition: background-color 0.3s ease, border-color 0.3s ease;
+      user-select: none;
+    }
+
+    .back-button-dark:hover,
+    .back-button-dark:focus {
+      background-color: #2c2c2c;
+      border-color: #fff;
+      outline: none;
+    }
+
+    .back-button-dark .text {
+      opacity: 0;
+      max-width: 0;
+      overflow: hidden;
+      white-space: nowrap;
+      transition: opacity 0.3s ease, max-width 0.3s ease;
+      display: inline-block;
+    }
+
+    .back-button-dark:hover .text {
+      opacity: 1;
+      max-width: 200px;
+    }
+
+    .back-button-dark .icon svg {
+      height: 20px;
+      width: 20px;
+      stroke: #e0e0e0;
+    }
+  </style>
+</head>
+<body>
+
+<a href="dashboard.html" class="back-button-dark">
+  <span class="icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
+      <path d="M15 18l-6-6 6-6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </span>
+  <span class="text">Back to Dashboard</span>
+</a>
+
+<div class="container">
+  <h2>Failed Students</h2>
+
+  <div class="filters">
+    <label class="filter-label" for="filter">Filter by:</label>
+    <select id="filter">
+      <option value="all">All</option>
+      <option value="semester1">Semester 1</option>
+      <option value="semester2">Semester 2</option>
+    </select>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Reg No</th>
+        <th>Semester</th>
+        <th>Reason</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>John Doe</td>
+        <td>REG123</td>
+        <td>Semester 1</td>
+        <td>Low Attendance</td>
+      </tr>
+      <tr>
+        <td>Jane Smith</td>
+        <td>REG456</td>
+        <td>Semester 2</td>
+        <td>Failed Exams</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+</body>
+</html>
