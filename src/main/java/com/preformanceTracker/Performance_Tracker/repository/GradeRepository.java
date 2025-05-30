@@ -11,20 +11,23 @@ import java.util.List;
 @Repository
 public interface GradeRepository extends JpaRepository<Grade, Long> {
 
-        List<Grade> findByStudent(Student student);
+    // Get all grades for a student
+    List<Grade> findByStudent(Student student);
 
-        @Query("SELECT g.student.id, AVG(g.marks) FROM Grade g GROUP BY g.student.id")
-        List<Object[]> findAverageMarksPerStudent();
+    // Custom query: Get average marks per student
+    @Query("SELECT g.student.id, AVG(g.marks) FROM Grade g GROUP BY g.student.id")
+    List<Object[]> findAverageMarksPerStudent();
 
-        // New native query to fetch all grades sorted by subject, year, marks descending
-        @Query(value = """
+    // Get failed grades by year and marks below passing
+    List<Grade> findByYearAndMarksLessThan(int year, int marks);
+
+    // ✅ New native query added from CODE 1
+    @Query(value = """
         SELECT s.name AS subjectName, st.name AS studentName, g.marks AS marks, st.year AS year
         FROM grades g
         JOIN students st ON g.student_id = st.id
         JOIN subjects s ON g.subject_id = s.id
         ORDER BY s.name, st.year, g.marks DESC
         """, nativeQuery = true)
-        List<Object[]> findAllSortedForTop3();
+    List<Object[]> findAllSortedForTop3();
 }
-//
- //
