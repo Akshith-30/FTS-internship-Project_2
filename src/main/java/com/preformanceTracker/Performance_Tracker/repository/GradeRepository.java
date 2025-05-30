@@ -26,3 +26,4 @@ public interface GradeRepository extends JpaRepository<Grade, Long> {
         """, nativeQuery = true)
         List<Object[]> findAllSortedForTop3();
 }
+//
