@@ -1,51 +1,48 @@
-create schema performance_tracker;
-use performance_tracker;
+```sql
+-- 1. Create Schema and Use It
+CREATE SCHEMA IF NOT EXISTS performance_tracker;
+USE performance_tracker;
 
-CREATE TABLE students (
-id INT AUTO_INCREMENT PRIMARY KEY,
-roll_number VARCHAR(50) UNIQUE NOT NULL,
-name VARCHAR(100) NOT NULL,
-year INT NOT NULL,
-section VARCHAR(1) NOT NULL,
-grade CHAR(1),
-created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-CREATE TABLE subjects (
-id INT AUTO_INCREMENT PRIMARY KEY,
-name VARCHAR(50) NOT NULL
-);
-
-CREATE TABLE grades (
-id INT AUTO_INCREMENT PRIMARY KEY,
-student_id INT NOT NULL,
-subject_id INT NOT NULL,
-marks INT NOT NULL CHECK (marks BETWEEN 0 AND 100),
-
-    CONSTRAINT fk_student
-        FOREIGN KEY (student_id)
-        REFERENCES students(id)
-        ON DELETE CASCADE,
-
-    CONSTRAINT fk_subject
-        FOREIGN KEY (subject_id)
-        REFERENCES subjects(id)
-        ON DELETE CASCADE
-);
-ALTER TABLE grades ADD CONSTRAINT uq_grade UNIQUE (student_id, subject_id);
-
-CREATE TABLE admin (
-admin_id VARCHAR(50) PRIMARY KEY,
-admin_pass VARCHAR(255) NOT NULL
+-- 2. Create Students Table
+CREATE TABLE IF NOT EXISTS students (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    roll_number VARCHAR(50) UNIQUE NOT NULL,
+    name VARCHAR(100) NOT NULL,
+    year INT NOT NULL,
+    section VARCHAR(1) NOT NULL,
+    grade CHAR(1),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+-- 3. Create Subjects Table
+CREATE TABLE IF NOT EXISTS subjects (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50) NOT NULL
+);
+
+-- 4. Create Grades Table with Foreign Keys and Constraints
+CREATE TABLE IF NOT EXISTS grades (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    student_id INT NOT NULL,
+    subject_id INT NOT NULL,
+    marks INT NOT NULL CHECK (marks BETWEEN 0 AND 100),
+    CONSTRAINT fk_student FOREIGN KEY (student_id) REFERENCES students(id) ON DELETE CASCADE,
+    CONSTRAINT fk_subject FOREIGN KEY (subject_id) REFERENCES subjects(id) ON DELETE CASCADE,
+    CONSTRAINT uq_grade UNIQUE (student_id, subject_id)
+);
+
+-- 5. Create Admin Table
+CREATE TABLE IF NOT EXISTS admin (
+    admin_id VARCHAR(50) PRIMARY KEY,
+    admin_pass VARCHAR(255) NOT NULL
+);
+
+-- 6. Insert Initial Admin Credentials
 INSERT INTO admin (admin_id, admin_pass)
-VALUES ('admin123', 'adminpass');
+VALUES ('admin123', 'Admin@123')
+ON DUPLICATE KEY UPDATE admin_pass = VALUES(admin_pass);
 
-select * from grades;
-select * from students;
-select * from subjects;
-select * from admin;
-
+-- 7. Insert Sample Subjects
 INSERT INTO subjects (name) VALUES
 ('Mathematics'),
 ('Physics'),
@@ -53,6 +50,13 @@ INSERT INTO subjects (name) VALUES
 ('English'),
 ('Computer Science');
 
-UPDATE admin
-SET admin_pass = 'Admin@123'
-WHERE admin_id = 'admin123';
+-- 8. Insert Students
+
+-- 9. Insert Grades for All Students
+
+-- 10. Verification Queries
+SELECT * FROM students;
+SELECT * FROM subjects;
+SELECT * FROM grades;
+SELECT * FROM admin;
+```
