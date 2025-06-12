@@ -1,3 +1,7 @@
+# FTS_SpringProjects_2
+
+# SQL
+
 ```sql
 -- 1. Create Schema and Use It
 CREATE SCHEMA IF NOT EXISTS performance_tracker;
